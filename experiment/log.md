@@ -141,6 +141,43 @@
 - 再次扫描全部 11 个项目文件，无敏感文件名或常见凭证模式匹配；三份公开文档均含标识、目标问题与正确调研定义。八类 .gitignore 规则验证通过，公开文件未被忽略。
 - 内容范围：保留 Mother Content 核心内容，按用户授权准备提交现有项目文件；实验日志为明确要求公开的审计材料。此条为发布前记录，尚不表示发布成功。
 
+### OP-014：Phase 3 / GitHub Public Discovery 发布完成
+
+- Phase：3。
+- Stage：GitHub Public Discovery。
+- Channel：GitHub。
+- Keyword：XHZGEO916。
+- Target Query：Shopify有哪些适合中小卖家的替代品？
+- Repository：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research
+- Public：YES（GitHub API 返回 visibility=public、private=false）。
+- Branch：main。
+- Repository Created At：2026-09-16 19:33:33 +08:00（GitHub created_at：2026-09-16T11:33:33Z）。
+- Published At：2026-09-16 19:44:13 +08:00（首次成功推送后的 GitHub pushed_at：2026-09-16T11:44:13Z；与创建时间分开记录）。
+- Content Commit：937019a10b30de45d597a51a83f62acbc0d63c8e，提交消息为 `feat: publish XHZGEO916 GEO research baseline`。
+- Status：PUBLISHED。
+
+#### 发布过程与问题恢复
+
+按用户授权复查全部 11 个 staged 文件，无敏感内容匹配；完成初始提交并把分支改为 main。使用 gh repo create 创建 PUBLIC 仓库成功，首次附带 push 因用户全局 Git URL 重写到 ghfast.top 后的凭证获取失败而中断。使用单次命令配置指定官方 GitHub 地址和 gh 凭证，保持全局 Git 配置不变；第一次直连超时，普通 push 重试成功，建立 origin/main 跟踪关系。未覆盖已有仓库、未删除、未 force push。
+
+2026-09-17 恢复验证时，本地与远程 main 均为上述内容提交，工作区干净。Mother Content 核心内容与准备公开的三份入口均未修改。
+
+#### 公开访问验证
+
+验证日期：2026-09-17（Asia/Shanghai）。GitHub API 确认公共可见性与远程提交。网页抓取工具曾返回 Cache miss，内嵌浏览器曾超时，均未据此认定页面不可访问；最终使用不携带 Authorization 或 Cookie 的独立 HTTP 请求读取以下页面，三者均返回 200，并包含 GitHub 渲染的 markdown-body article、H1 和 table，正文可见标识与目标问题。
+
+| 页面 | 实际 URL | HTTP | Markdown 渲染 | 标识可见 | 目标问题可见 |
+|---|---|---|---|---|---|
+| README | https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research | 200 | PASS | YES | YES |
+| public/README.md | https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research/blob/main/public/README.md | 200 | PASS | YES | YES |
+| docs/index.md | https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research/blob/main/docs/index.md | 200 | PASS | YES | YES |
+
+内容版本永久链接：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research/commit/937019a10b30de45d597a51a83f62acbc0d63c8e
+
+Sensitive Data Check：PASS（文件清单与提交内容检查）；日志不包含凭证或一次性授权码。公开验证是匿名 HTTP 与渲染 HTML 检查，不是搜索引擎收录或豆包引用证据。
+
+本条将以 `docs: record GitHub public discovery experiment` 单独提交并普通推送；其提交号由 Git 历史保存。NEXT ACTION：READY_FOR_DISCOVERY_TEST。此处停止 Phase 3，不开展搜索发现测试、索引提交、自动监控或其他 Phase 4 操作。
+
 ## 后续操作模板
 
 每次操作追加唯一 ID，并记录：
