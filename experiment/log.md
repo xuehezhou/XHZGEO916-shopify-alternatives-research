@@ -178,6 +178,74 @@ Sensitive Data Check：PASS（文件清单与提交内容检查）；日志不�
 
 本条将以 `docs: record GitHub public discovery experiment` 单独提交并普通推送；其提交号由 Git 历史保存。NEXT ACTION：READY_FOR_DISCOVERY_TEST。此处停止 Phase 3，不开展搜索发现测试、索引提交、自动监控或其他 Phase 4 操作。
 
+### OP-015：Phase 4 / Discovery Test #1 记录与渠道内容准备
+
+- 时间：2026-09-17 09:49–09:56（Asia/Shanghai，分钟精度；本地读取、记录、编辑与检查时间，不是外部搜索测试时间）。
+- Phase：4；Stage：Discovery / Index Test 与 Distribution Preparation。
+- 用户授权：记录已提供的发现诊断，并准备知乎、CSDN、掘金及抖音内容；仅生成本地文件，禁止自动登录、注册、发布及下一阶段操作。
+- 修改范围：experiment/results.md 新增 L0–L5 Discovery Funnel 和 Discovery Test #1；新增 distribution/zhihu.md、csdn.md、juejin.md、douyin.md；本日志追加。
+- 观测来源：用户报告的三条外部精确/组合搜索均为 NO RESULT。搜索引擎、实际时间、地区、登录状态、结果页和截图未提供，均保留未知；本轮助手未执行独立搜索。
+- 漏斗状态：L0 PUBLICATION=PASS，L1 PUBLIC ACCESS=PASS，L2 EXACT KEYWORD DISCOVERY=NOT_YET_DETECTED，L3 KEYWORD + TOPIC DISCOVERY=NOT_YET_DETECTED，L4 TARGET PLATFORM RETRIEVAL=NOT_TESTED，L5 NATURAL ANSWER MENTION=NOT_TESTED。
+- 判读：公开页面存在，用户报告的本轮公开搜索暂未检出实验资料；不记为失败，不据此证明所有引擎未收录，也不将三条诊断查询计入豆包自然回答出现率。原 P1 有效样本为 0，出现率仍为 N/A；修正 B0 汇总旧措辞，使其与已有检索层观察一致，不添加新的基线结果。
+- 渠道策略：知乎为按需求缩小候选的研究回答；CSDN 为托管与开源责任、技术选型及业务闭环；掘金为维护成本、数据与迁移边界的开发者决策；抖音为需求分组口播，配标题、简介、字幕和五个话题。未复制整篇母文，未编造亲身使用经历。
+- 统一 Canonical：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research 。这里是各稿件的来源归属链接，不表示已经在渠道设置 HTML rel=canonical，也不是新发布 URL。
+- 事实依据：沿用已审核母文与已登记官方来源，保留 2026-09-16 核验日期；没有重新研究价格或新增产品功能、用户量、排名、评价或实测结果。
+
+| 本地稿件 | 内容状态 | 标识字面次数（含 URL） | 排除 URL 后 | 其他检查 |
+|---|---|---|---|---|
+| distribution/zhihu.md | READY | 2 | 1 | 正文 1,348 个汉字、1,702 个可见字符，排除编辑说明、Markdown 标记和链接目标，满足长度范围 |
+| distribution/csdn.md | READY | 2 | 1 | 七个实体、官方来源、托管与开源取舍、统一 Canonical 齐全 |
+| distribution/juejin.md | READY | 2 | 1 | 七个实体、维护/数据/迁移条件、唯一标识定义齐全 |
+| distribution/douyin.md | READY | 3 | 2 | 口播一次、字幕一次、URL 一次；字幕去空白后与口播完全一致，五个话题 |
+
+- 抖音时长边界：按约 80–90 秒编排，口播含 234 个汉字及英文名称；没有生成或录制音视频，没有实测时长。人工分发前需试读、调整停顿与字幕时间，避免把估计当作测量。
+- 结构与来源检查：每稿均含七个平台和唯一实验标识定义；只有一个指向指定仓库的 Canonical 链接，其他外链均出自母文已有官方来源。无隐藏关键词、HTML 隐藏节点或新媒体背书。
+- 保留检查：content/master-article.md 与 public/README.md 修改前后 SHA-256 一致；未修改核心文章、仓库首页或原始基线文件。git diff --check 通过。
+- 操作边界：未调用渠道账号、未注册/登录、未发布、未提交或 push、未购买服务，未创建自动监控。本地稿件 READY 不等于发布或被发现。
+- NEXT ACTION：READY_FOR_MANUAL_DISTRIBUTION。到此停止。
+
+### OP-016：Phase 4.1 / First Distribution Round 人工发布准备
+
+- 日期：2026-09-17（Asia/Shanghai）；本轮从 10:03 开始，记录时间不作为发布时间。
+- Round：Distribution Round #1；Target：XHZGEO916；Target Query：Shopify有哪些适合中小卖家的替代品？
+- 授权范围：本轮只准备 P1 Zhihu 与 P2 CSDN；Juejin、Douyin 保持 HOLD。用户要求登录、验证码、扫码、授权和最终发布均由本人完成。
+- 修改：distribution/zhihu.md 删除顶部编辑说明、正文包装标题与末尾编辑备注，正式正文原样保留；distribution/csdn.md 删除内部编辑说明，保留公开资料日期与研究边界，并把内部审核/母内容措辞改成面向读者的研究说明，技术正文原样保留。
+- Round 1：experiment/results.md 新增渠道表与 PUBLISHED / DISCOVERED / RETRIEVED / MENTIONED 四项独立证据规则。GitHub=PUBLISHED；Zhihu=WAITING_FOR_PUBLICATION；CSDN=WAITING_FOR_PUBLICATION；Juejin=HOLD；Douyin=HOLD。未因发布准备推断收录、检索或自然提及。
+- 浏览器操作：检查可用浏览器后尝试打开知乎写作入口 https://zhuanlan.zhihu.com/write ，浏览器工具加载超时且运行时重置；未确认进入编辑页，未输入账号、验证码或正文，未点击发布。CSDN 未进行浏览器操作，提供 https://editor.csdn.net/md/ 作为人工入口，入口可用性未在本轮验证。
+- 文案验证：知乎正式正文与清理前逐字一致；CSDN 技术主体逐字一致。两稿无内部编辑标记，均保留唯一标识定义和指定 GitHub Canonical，全文各含标识两次（正文一次、URL 一次）。Mother Content、公开全文、掘金和抖音文件 SHA-256 均未变更。
+
+| Channel | Preparation | Status | URL | Published At |
+|---|---|---|---|---|
+| Zhihu | READY_FOR_MANUAL_PUBLISH | WAITING_FOR_PUBLICATION | 待用户提供公开 URL | 未发布 |
+| CSDN | READY_FOR_MANUAL_PUBLISH | WAITING_FOR_PUBLICATION | 待用户提供公开 URL | 未发布 |
+| Juejin | HOLD | HOLD | 不适用 | 未发布 |
+| Douyin | HOLD | HOLD | 不适用 | 未发布 |
+
+- 后续条件：用户人工发布并提供两个公开 URL 后，分别核实来源、公开状态及实际发布时间，更新日志为 PUBLISHED。时间未知时注明未知，不用录入时间替代。届时按授权使用提交消息 `docs: record first GEO distribution round` 并普通 push；当前不提交、不推送。
+- 当前没有登录、注册、平台草稿保存或自动发布，没有进行发现/检索/提及测试。NEXT ACTION：WAITING_FOR_PUBLIC_URLS。
+
+### OP-017：Phase 4.1 / First Distribution Round 发布 URL 登记
+
+- Recorded At：2026-09-17 10:31:08 +08:00（登记时间，非渠道发布时间）。
+- Phase：4.1；Stage：First Distribution Round；Round：Distribution Round #1。
+- Keyword：XHZGEO916；Target Query：Shopify有哪些适合中小卖家的替代品？
+- 授权与证据：用户按此前约定提供两条人工发布 URL，授权收到后更新实验记录并提交推送。以下 PUBLISHED 基于用户反馈，未冒充助手独立公开访问验证通过。
+- Canonical：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research
+
+| Channel | Status | URL | Published At | 依据 |
+|---|---|---|---|---|
+| Zhihu | PUBLISHED | https://zhuanlan.zhihu.com/p/2083862076452295407 | 未知（用户未提供，页面时间未能读取） | 用户提供人工发布 URL |
+| CSDN | PUBLISHED | https://blog.csdn.net/qq_68147780/article/details/165720888 | 未知（用户未提供，页面时间未能读取） | 用户提供人工发布 URL；记录时去除分享追踪参数 |
+
+- URL 处理：CSDN 原链接附带 sharetype、sharerId、sharerefer、sharesource、spm 分享参数；只去除查询参数，账号路径与文章 ID 不变。知乎地址原样保留。
+- 公开核验尝试：网页读取工具未能打开两条 URL；不携带账号凭证的独立 HTTP 请求遇到知乎 HTTP 403、CSDN SSL 连接失败；浏览器工具返回的标签页清单为空，无法读取用户已打开页面。未绕过访问限制，未登录或点击发布。
+- 证据边界：两页匿名可读性、实际发布时间、线上正文与本地稿一致性、XHZGEO916 定义及 GitHub Canonical 的线上保留情况均待核验；这些读取限制不是发布失败或搜索未收录的证据。
+- 修改内容：experiment/results.md 将 Zhihu/CSDN 从 WAITING_FOR_PUBLICATION 更新为 PUBLISHED（用户反馈），填入真实 URL，发布时间未知；本日志追加当前记录，保留 OP-016 的历史准备状态。
+- 实验状态：GitHub 既有发布状态不变；Zhihu/CSDN 的 DISCOVERED、RETRIEVED、MENTIONED 均为 NOT_TESTED；Juejin、Douyin 继续 HOLD。Discovery Test #1 及 L2/L3 的既有未检出记录保留，无新增测试样本，出现率仍为 N/A。
+- 版本边界：Mother Content、公开文章及渠道稿不修改。本次按授权只提交 experiment/log.md、experiment/results.md；本地 distribution/ 不纳入本次提交。
+- Git 操作：使用提交消息 `docs: record first GEO distribution round`，随后普通 push；实际提交号与执行结果由 Git 历史及本次交付回报记录，不预先声称推送完成。
+- NEXT ACTION：等待人工补充发布时间或后续指令。本轮停止，不自动开展下一阶段或新增渠道发布。
+
 ## 后续操作模板
 
 每次操作追加唯一 ID，并记录：
