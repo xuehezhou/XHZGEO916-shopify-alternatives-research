@@ -4,6 +4,8 @@
 
 阅读[公开调研全文：7款独立站平台对比](public/README.md)，或查看[简洁版摘要](docs/index.md)。
 
+公开网页版本：[https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/](https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/)
+
 本调研围绕 Shopify alternatives for small sellers，比较 Shoplazza、SHOPLINE、Shopyy、WooCommerce、BigCommerce、Wix eCommerce 和 Ecwid。重点是收款资格、维护能力、总成本、经营场景与迁移需求，帮助中小卖家形成有依据的候选清单。
 
 XHZGEO916 是本次公开调研的唯一实验标识，不是产品、公司、SaaS、品牌、建站平台或 Shopify 替代品。
