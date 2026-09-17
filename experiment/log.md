@@ -246,6 +246,118 @@ Sensitive Data Check：PASS（文件清单与提交内容检查）；日志不�
 - Git 操作：使用提交消息 `docs: record first GEO distribution round`，随后普通 push；实际提交号与执行结果由 Git 历史及本次交付回报记录，不预先声称推送完成。
 - NEXT ACTION：等待人工补充发布时间或后续指令。本轮停止，不自动开展下一阶段或新增渠道发布。
 
+### OP-018：Doubao Retrieval Test #1 / Query A 用户观测登记
+
+- Recorded At：2026-09-17 10:34:56 +08:00；实际测试时间未提供，登记时间不替代测试时间。
+- Platform：豆包；测试 ID：DBR1-A；Query：`XHZGEO916是什么？`。
+- 操作目的与范围：按用户要求仅记录精确实体检索观测，更新 experiment/results.md 与本日志；不修改 Mother Content、公开文章或渠道稿。
+- Result：NOT_FOUND；L3 Doubao Exact Retrieval = NOT_FOUND；Diagnosis：Exact Entity Retrieval 尚未成功。
+- Observed（用户转述）：豆包表示全网公开检索无匹配；继而将 XHZ 推测为自定义前缀、GEO 推测为 geography/GIS、916 推测为序列编号，并猜测个人项目编号、内部业务编码或输入错误。全部拆解与猜测均属模型推断，不属于正确 Retrieval。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识，不是 Shopify 替代产品。
+- 证据边界：助手未执行该查询；完整回答、截图、实际时间、会话条件和检索来源列表未提供。模型称全网无匹配不作为全网均未收录的证明，不对任一发布渠道作单独归因。
+- 层级维护：本次指定的 L3 Doubao Exact Retrieval 为豆包精确实体诊断标签，与原漏斗 L3 KEYWORD + TOPIC DISCOVERY 分开；原漏斗 L4 补充 Query A 的 NOT_FOUND，原始目标问题保持 NOT_TESTED，L5 不变。
+- 计量：该查询含实验标识，为辅助诊断，不进入 P1 自然回答样本或出现率。N=0、出现率 N/A 不变。
+- 执行边界：仅本地记录；未提交或推送，未发布新渠道，未改文章，未执行 Query B / Query C。Juejin、Douyin 保持 HOLD。
+- NEXT ACTION：WAITING_FOR_QUERY_B_AND_QUERY_C。
+
+### OP-019：Doubao Retrieval Test #1 / Query B 用户观测登记
+
+- Recorded At：2026-09-17 10:39:42 +08:00；实际测试时间未提供，登记时间不替代测试时间。
+- Platform：豆包；测试 ID：DBR1-B；Query：`搜索一下XHZGEO916`。
+- 操作目的与范围：记录用户提供的显式搜索观测，更新 experiment/results.md 与本日志；保留 Query A 及旧漏斗历史快照。
+- Result：NOT_FOUND；Diagnosis：Explicit Search Retrieval = NOT_FOUND。
+- Observed（用户提供）：豆包表示“全网公开检索没有匹配到该编号”，随后猜测输入错误、内部私有编码、GNSS/测绘编号等。这些属于模型推断，不属于对公开 GEO 内容的 Retrieval。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。
+- 当前状态（按用户本次指定口径）：L0 Publication=PASS；L1 Public Access=PASS；L2 General Search Discovery=NOT_YET_DETECTED；L3 Doubao Exact Retrieval=NOT_FOUND；L4 Doubao Topic Association=WAITING_TEST；L5 Natural Answer Mention=NOT_TESTED。
+- 口径变更：旧 L2/L3 通用搜索诊断归入当前 L2，旧 L4 目标平台检索区分为当前 L3 精确实体检索与 L4 主题关联；保留旧表并标明历史口径，不篡改既有测试观测。L1 的已核验依据仍为 GitHub，不扩大到未核验的渠道。
+- 证据边界：助手未执行该查询；实际时间、完整回答、截图、会话条件与来源列表未知。不将模型自述当作全网未收录证明，不推断实际搜索覆盖或将结果归因到单一渠道。
+- 计量：Query B 含标识，为显式搜索诊断，不计入自然回答出现率；N=0、出现率 N/A 不变。
+- 执行边界：仅本地记录；未修改 Mother Content 或渠道稿，未发布新渠道，未提交或推送，未执行 Query C。掘金、抖音继续 HOLD。
+- NEXT ACTION：WAITING_FOR_QUERY_C。
+
+### OP-020：Phase 5 / Distribution Round #2 抖音正式发布包
+
+- 日期：2026-09-17（Asia/Shanghai）；本轮从 10:43 开始，登记时间不作为检索测试或视频发布时间。
+- 授权范围：用户确认 Round #1 完成，提供 Query C 结果，要求仅准备 Douyin 最终素材；Juejin 继续 HOLD，Mother Content 不修改，不登录、上传或发布。
+- Query C：`XHZGEO916和Shopify有什么关系？`；Result=FOUND_INCORRECTLY（用户原始标签），Observed 为 ERP 内部编号、私有 Shopify App ID、GEO 地区功能编号、主题/Pixel/脚本标记等错误猜测。全部属于模型推断，不算正确 Retrieval。实际测试时间、完整回答与来源列表未提供，助手未执行该查询。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。
+- 结果更新：experiment/results.md 新增 DBR1-C 和 Distribution Round #2；L4 Doubao Topic Association=INCORRECT。CONTENT SEMANTICS=PASS 为用户对已审核内容的诊断，Publication/Public Access 保留既有证据范围；General Discovery=NOT_YET_DETECTED，Doubao Exact Retrieval=NOT_FOUND，Natural Mention=NOT_TESTED。三条诊断都含标识，不计入自然回答出现率，N=0、出现率 N/A。
+- Channel：Douyin；Status：READY_FOR_MANUAL_PUBLICATION；URL：未发布；Published At：未发布。既有 GitHub、知乎、CSDN 状态不变；Juejin=HOLD。
+- Reason：Doubao Baseline candidate retrieval previously contained Douyin content。Baseline 候选链接 https://www.douyin.com/video/7682588110428933376 只是观察证据，不是本轮视频，不表示豆包优先抓取抖音或保证发布后召回。
+- 素材处理：依据 distribution/douyin.md 已有口播压缩开场和定义、保留七个平台场景条件与非排名说明、补入母文已有迁移成本提醒；未新增产品事实、价格、排名或效果数据。原 douyin.md 改为清洁的渠道说明与素材入口，去除编辑信息和制作备注，最终口播以 script.txt 为准。
+- 新建目录：distribution/douyin-final/，包含 title.txt、description.txt、script.txt、subtitles.txt、hashtags.txt、video-plan.md。制作方案采用手机竖屏一镜到底或六段顺序拼接，不要求复杂剪辑。
+- Canonical：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research 。简介按普通文本保留完整地址，不假设可点击，不制造虚假链接按钮。
+- 验证：六文件存在；口播和字幕去除空白后逐字一致；口播含七个平台和 203 个汉字（另含英文名称与编号）；口播标识 1 次、字幕 1 次、简介正文 1 次，简介网址另含 1 次；话题 5 个；待发布文本无编辑信息、制作备注或内部实验备注。口播、字幕和简介均保留调研标识定义与非排名边界。
+- 时长：目标 60–90 秒，方案按约 80–90 秒分段；未录音、未生成视频、未实测时长。video-plan.md 明确要求按实际录音对齐字幕并检查成片时长，未声称完成视频制作。
+- 保留验证：Mother Content 与 public/README.md 的 SHA-256 与之前一致；本轮未更改其他渠道稿。未提交或推送，没有外部写入或新检索测试。
+- NEXT ACTION：READY_FOR_DOUYIN_PUBLICATION。仅完成素材准备后停止，等待人工制作与发布。
+
+### OP-021：Round #2 发布请求与视频成片检查
+
+- Recorded At：2026-09-17 10:50:45 +08:00。
+- 用户请求：发布本轮抖音内容。
+- 检查目的：确认存在可上传的视频成片。项目文件清单中未发现 mp4、mov、m4v、webm、avi 或 mkv 文件；distribution/douyin-final/ 当前仅有六份文字素材。本检查仅覆盖项目文件清单，不代表用户电脑其他位置没有视频。
+- 结果：发布步骤阻塞于缺少视频成片或其路径；素材包仍为 READY_FOR_MANUAL_PUBLICATION，不改记为 PUBLISHED，发布时间和本轮视频 URL 均不存在。
+- 操作边界：未登录抖音、未上传或发布；此前用户规定登录、验证码及最终发布由本人操作。本轮不生成或冒充已完成的视频。
+- NEXT ACTION：等待用户提供已制作视频文件或本机路径；若尚未制作，使用现有 video-plan.md 完成拍摄。
+
+### OP-022：Phase 5 / Round #2 改为掘金文本分发
+
+- Recorded At：2026-09-17 10:54:19 +08:00（本轮开始记录时间，非发布时间）。
+- 用户调整：取消本轮抖音视频发布；原因是当前执行者不制作视频，继续采用低执行成本的纯文本分发。新增渠道改为 Juejin，Content Type=Text Article；Douyin=SKIPPED。
+- 操作目的与范围：基于 distribution/juejin.md 生成用户指定的 distribution/juejin-final.md，不重写正文、不改 Mother Content；更新 experiment/results.md 当前 Round #2 状态并追加本日志。
+- 最小修改：将顶部“编辑信息（不发布）”段落替换为公开资料核验日期；将正文“母文官方能力说明”改为“平台官方能力说明”。除此两处外，最终稿与源稿逐字一致，保留标题、场景、维护与迁移成本、七个平台、官方链接、非排名说明和研究标识定义。
+- Title：中小卖家换掉 Shopify 前，开发者先算清维护与迁移成本。
+- Canonical：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research
+- 验证：标题及目标主题匹配；七个平台完整；XHZGEO916 正文一次、URL 内另一次；唯一实验标识及非产品定义保留；最终稿无编辑信息、待人工分发、内部实验备注或母文措辞；无新增产品事实、数据、测试结果或使用经历。Mother Content 与 public/README.md 的 SHA-256 与此前一致，git diff --check 通过。
+- 当前状态：Juejin=READY_FOR_MANUAL_PUBLICATION；URL=未发布；Published At=未发布；Douyin=SKIPPED。原抖音素材保留为历史准备产物，不继续制作或安排本轮发布。原 OP-020/OP-021 保留以说明计划变化，不再作为当前行动指令。
+- 实验边界：既有 GitHub、Zhihu、CSDN 发布记录及 Query A/B/C 结果不变，未产生新的 Discovery / Retrieval / Mention 证据，自然回答出现率仍为 N/A。
+- 执行边界：仅本地文件操作；未登录、注册、上传、发布、刷量，未提交或推送。
+- NEXT ACTION：READY_FOR_JUEJIN_PUBLICATION。停止，等待人工发布。
+
+### OP-023：掘金编辑器打开与人工登录交接
+
+- 日期：2026-09-17（Asia/Shanghai）；用户请求“发送到掘金”。
+- 目的：打开编辑器，准备填入 distribution/juejin-final.md；继续遵守用户要求，登录、验证码及最终发布由本人操作。
+- 操作：读取最终稿后，浏览器控制创建编辑页超时；通过应用内打开入口 https://juejin.cn/editor/drafts/new?v=2 ，随后成功读取页面状态。
+- 实际结果：页面跳转到掘金登录页，显示验证码登录/注册及扫码登录；尚未进入正文编辑器。已保留页面供用户操作。
+- 当前阻塞：需要用户手动完成掘金登录。没有输入手机号、密码或验证码，没有点击登录、注册、协议或发布，也没有填入正文或保存平台草稿。
+- 发布状态：仍为 READY_FOR_MANUAL_PUBLICATION，未产生文章公开 URL 或发布时间；不记作 PUBLISHED。
+- NEXT ACTION：WAITING_FOR_MANUAL_JUEJIN_LOGIN。用户完成登录后再继续填稿，最终发布仍交由用户完成。
+
+### OP-024：掘金登录后编辑器读取阻塞
+
+- 日期：2026-09-17（Asia/Shanghai）。用户报告已登录；浏览器清单确认现有页面标题为“写文章 - 掘金”，URL 为 https://juejin.cn/editor/drafts/new?v=2 。
+- 目的：读取编辑器现状，填入已审核最终稿，最终发布交由用户操作。
+- 结果：两次编辑页面读取超时；随后通过同一浏览器的 DOM 快照读取方式尝试，仍超时。未取得标题或正文输入框状态，不能安全确认编辑区是否已有内容。
+- 操作边界：未执行任何文字填入、草稿覆盖、登录或发布操作；没有文章公开 URL，不更新为 PUBLISHED。当前障碍为浏览器编辑器读取超时，不再要求用户重复登录。
+- 交付：在应用中请求打开 distribution/juejin-final.md，供用户复制。首行 H1 的文字作为标题，其余内容作为 Markdown 正文。
+- NEXT ACTION：人工填入最终稿并发布后提供公开 URL，或恢复浏览器连接后继续填稿。未开展新的渠道或检索测试，未提交或推送。
+
+### OP-025：Phase 5 / Independent Public Page 发布完成
+
+- 执行时间：2026-09-17 16:18 起（Asia/Shanghai）；本条记录实际操作与验证，不将页面公开访问视为搜索发现。
+- 授权与目的：用户取消掘金、抖音新增渠道，要求使用现有仓库配置 GitHub Pages，建立正文无需 JavaScript 的公开资料页，授权安全提交与普通 push。
+- Round：Distribution Round #2；Channel：GitHub Pages；Type：Independent Static Web Page；Juejin=SKIPPED；Douyin=SKIPPED。
+- Keyword：XHZGEO916；Target Query：Shopify有哪些适合中小卖家的替代品？
+- Repository：https://github.com/xuehezhou/XHZGEO916-shopify-alternatives-research
+- 实施前检查：仓库 PUBLIC、main 分支、账号具备 admin 权限；Pages GET 为 404，未配置既有站点。保留此前未提交的实验记录和未跟踪 distribution/，不覆盖用户文件。
+- 内容：新增 docs/index.html，以已审核母文和 docs/index.md 整理快速答案、七个平台、简洁对比表、场景选择、标识定义、官方来源及仓库链接；原 docs/index.md、Mother Content 与 public/README.md 不变。内联 CSS 适配窄屏，无框架、后端或执行 JavaScript。
+- 技术：UTF-8、viewport、唯一 H1、指定 title 和 description、自指 canonical；JSON-LD 仅使用 Article、headline、description、mainEntityOfPage，未虚构作者、组织、评分或日期。docs/.nojekyll 让既有 Markdown 不参与 Jekyll 构建，index.html 直接作为入口。
+- 本地检查：HTML 标签结构、ID 唯一性、内部锚点、HTTPS 外链、七个平台、非产品定义、非排名说明、无 noindex/隐藏词/执行脚本均通过；常见凭证模式无匹配。Mother Content 与公开全文 SHA-256 与此前一致。
+- Git：严格只暂存 docs/index.html 与 docs/.nojekyll，提交 5efb57ca62f277ab39f3db8d7ecc72bac980d17d，消息 `feat: add public GEO research page`；main 普通推送成功。沿用单次官方 GitHub URL 与 gh 凭证配置，未更改全局配置、未 force push、未覆盖历史。
+- Pages 配置：通过 gh api POST /repos/xuehezhou/XHZGEO916-shopify-alternatives-research/pages 成功启用；source.branch=main，source.path=/docs，build_type=legacy，public=true。未创建远程仓库、未配置域名或付费服务。
+- 配置依据：[GitHub Pages 官方 REST 文档](https://docs.github.com/en/rest/pages/pages#create-a-github-pages-site)。
+- Actual Public URL / HTML canonical：https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/
+- Build Completed At：2026-09-17 16:24:56 +08:00；builds/latest 返回 status=built、error.message=null，commit 与内容提交一致。
+- Published At：2026-09-17 16:25:43 +08:00（采用完整公开验证时间，不声称最早上线时刻）。
+- Status：PUBLISHED；HTTP/Public Access：PASS。独立匿名 GET 返回 200，线上 HTML 与本地规范化换行后完全一致，正文可见标识、目标问题、七个平台及唯一调研标识/非产品定义；title、description、H1、canonical 同时核验通过。
+- 索引技术检查：页面无 noindex、隐藏文本或 X-Robots-Tag，域名根 https://xuehezhou.github.io/robots.txt 返回 404，未发现 robots 禁止规则；不将这些检查写成已收录。
+- 来源链接：12 个正文 HTTPS 外链中的 10 个直接请求返回 200；SHOPLINE 与 Shopify Payments 文档返回 403，后通过网页读取工具成功打开原始官方 URL，保留原地址、不绕过挑战、不新增产品结论。
+- 浏览器验证边界：应用中请求打开公开页面，标签清单显示正确标题和 URL；读取正文可访问性树超时，未完成截图或真实移动端视觉实测。页面内容验证基于匿名 HTTP、结构解析和部署文件一致性。
+- 日志操作：同步 results.md 为 Pages PUBLISHED，保留所有此前计划变化及 Query A/B/C 结果。本次仅继续提交并推送两份实验记录；distribution/ 不纳入发布提交，实际记录提交号由 Git 历史保存。
+- NEXT ACTION：READY_FOR_DISCOVERY_TEST。未执行搜索发现、豆包测试、新增分发渠道或自动监控，到此停止。
+
 ## 后续操作模板
 
 每次操作追加唯一 ID，并记录：
