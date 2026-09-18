@@ -1,10 +1,53 @@
 # 每轮测试结果与计算口径
 
-状态：Round #1 已完成（用户确认）；已记录 Discovery Test #1 及 Doubao Retrieval Test #1：A/B=NOT_FOUND、C=FOUND_INCORRECTLY（错误关联，不是正确检索）。Phase 5 / Distribution Round #2 调整为 GitHub Pages 独立静态网页，已实际验证公开访问并登记 PUBLISHED；Juejin、Douyin 均为 SKIPPED。豆包自然回答有效样本仍为 0，出现率 N/A。协议 P1 见 [baseline.md](baseline.md)。
+状态：Phase 7 / Indexability Diagnosis 已完成必要导航与 sitemap 修复，并于 2026-09-18 实际验证线上文件。PUBLICLY_ACCESSIBLE、CRAWL_ALLOWED、INDEXABLE_BY_CONFIGURATION；INDEXING_NOT_CONFIRMED、SEARCH_DISCOVERY_NOT_DETECTED。用户报告 Test #2 A/B=NOT_FOUND、C=FOUND_INCORRECTLY；没有新的搜索或豆包测试。Juejin、Douyin=SKIPPED，自然回答 N=0、出现率 N/A。
+
+## Phase 7 / Indexability Diagnosis
+
+- 检查开始：2026-09-17 16:36:45 +08:00；中断后恢复：2026-09-18 09:42:55 +08:00。
+- 最终线上验证：2026-09-18 09:47:19 +08:00，使用不携带 Authorization/Cookie 的 curl 请求。
+- Public URL：https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/
+- 最终跳转 URL：https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/ （无跳转到登录或其他页面）。
+- Fix Commit：2b94071504ecabd032ea441fe8e6cbeca17f6c99，`fix: improve public page discoverability`。
+- 发布传输：普通 git push 因 github.com:443 连接超时失败；恢复后通过官方 GitHub Git 数据接口上传完全相同的 blob/tree/commit，并以 force=false 快进 main。哈希与本地提交一致，未覆写历史。Pages 构建该提交成功，updated_at=2026-09-18T01:45:56Z。
+
+| 检查项 | 实际结果 | 判定与范围 |
+|---|---|---|
+| HTTP / Public Access | 200，匿名读取成功 | PASS / PUBLICLY_ACCESSIBLE |
+| HTML Server Rendered | 静态 HTML 直接包含主要正文 | PASS；此处指服务端响应已有正文，不是动态 SSR 框架 |
+| Keyword In Raw HTML | XHZGEO916、Shopify、中小卖家及七个平台均可直接读取 | PASS；排除 script/style 后的正文文本也包含全部词项 |
+| Title | 2026 Shopify有哪些适合中小卖家的替代品？｜XHZGEO916 | PASS |
+| Description | 包含唯一调研标识定义和七个平台 | PASS |
+| Canonical | 唯一值与实际 Pages 首页完全相同 | PASS；检查正确，未改动 |
+| Robots Meta | 未设置 robots/googlebot/bingbot 限制 | PASS；无 noindex、nofollow |
+| X-Robots-Tag | 响应头中不存在 | PASS；无响应头禁止规则 |
+| 域名根 robots.txt | https://xuehezhou.github.io/robots.txt 返回 404 | NOT_PRESENT；不是禁止抓取证据 |
+| 项目路径 robots.txt | https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/robots.txt 返回 404 | NOT_PRESENT；未添加不能作用于域名根的子路径规则 |
+| sitemap.xml | https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/sitemap.xml 返回 200 | PASS；合法 XML/命名空间，只有真实首页，无 lastmod |
+| README → Pages | 公开 README 的 Markdown 中有正常链接 | PASS；通过匿名 GitHub Readme API HTTP 200 核验 |
+| Pages → Repository | “完整研究仓库”链接指向现有仓库 | PASS；另有普通站点地图链接 |
+| 正文与本地一致性 | 线上 HTML 与本地规范化换行后完全一致 | PASS；无 JS-only 正文、隐藏词或登录要求 |
+| Crawl Allowed | 未发现拒绝抓取规则 | YES / CRAWL_ALLOWED；配置与当前请求层面的判断 |
+| Indexable By Configuration | HTTP、内容和索引配置未发现阻断项 | YES / INDEXABLE_BY_CONFIGURATION；不是搜索引擎收录承诺 |
+| Actual Search Indexing | 无真实收录证据 | NOT_CONFIRMED / INDEXING_NOT_CONFIRMED |
+| Public Search Discovery | 用户报告两条外部查询均未检出 | SEARCH_DISCOVERY_NOT_DETECTED；引擎及实际测试时间未知 |
+| Doubao Retrieval | 用户报告 A/B 未找到、C 错误关联 | NOT_FOUND / INCORRECT；仅 Test #2 已有观测 |
+
+### 必要修改及 robots 范围说明
+
+1. README 增加一条“公开网页版本”正常链接。
+2. docs/index.html 将仓库导航标签改为“完整研究仓库”，页脚增加 sitemap 链接；研究正文、title、description 与正确 canonical 均不改动。
+3. 新增 docs/sitemap.xml，仅列出已验证公开的首页，不填写虚假 lastmod。
+
+域名根 robots.txt 不存在不自动构成失败。当前仓库部署在子路径，docs/robots.txt 只能落到项目子路径，不能充当主机根 /robots.txt；因此不新增该无效控制文件、不扩展到其他仓库或域名。根目录要求及 Google 对 404 的处理依据：[Google robots.txt 规范说明](https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec)。这说明配置检查口径，不保证豆包或其他平台的具体抓取行为。
+
+当前未发现能证明“未收录原因”的技术阻断；sitemap 和双向导航是发现入口的补齐，不能将原先缺少 sitemap/robots 直接判为未收录根因。需要真实搜索证据才能改为已索引。本轮停止内容扩张，没有测试最终问题或创建渠道。
+
+NEXT ACTION：A. WAIT_FOR_INDEXING（状态建议，不代表已创建自动监控或定时任务）。
 
 ## Phase 4 / Discovery Funnel
 
-### 当前状态（Query C 登记后 / Phase 5）
+### 最近已有证据状态（Test #2 A/B/C 已登记；Phase 7）
 
 按用户本次指定口径维护以下层级；旧口径保留在后方历史表中，避免把层级调整误记成新的测试结果。
 
@@ -12,12 +55,103 @@
 |---|---|---|---|
 | L0 | Publication | PASS | GitHub 与 GitHub Pages 已公开；知乎/CSDN 发布为用户反馈，见 OP-017/OP-025 |
 | L1 | Public Access | PASS | 已核验 GitHub 与 GitHub Pages 匿名 HTTP 200；不扩展为知乎/CSDN 匿名访问验证通过 |
-| L2 | General Search Discovery | NOT_YET_DETECTED | Discovery Test #1 三条诊断查询的用户观测，无新增公开搜索测试 |
-| L3 | Doubao Exact Retrieval | NOT_FOUND | Query A 精确实体查询与 Query B 显式搜索均未找到，依据用户观测 |
-| L4 | Doubao Topic Association | INCORRECT | Query C 的用户观测为 FOUND_INCORRECTLY，模型猜测未建立正确调研关系 |
+| L2 | General Search Discovery | NOT_YET_DETECTED | Discovery Test #1 及 Phase 7 用户提供的两条外部搜索均未检出；助手未独立搜索 |
+| L3 | Doubao Exact Retrieval | NOT_FOUND | Test #2 A/B 均为 NOT_FOUND，依据用户报告；相对 Test #1 未观察到改善 |
+| L4 | Doubao Topic Association | INCORRECT | Test #2 C 为 FOUND_INCORRECTLY，与 Test #1 同类；不是正确 Retrieval |
 | L5 | Natural Answer Mention | NOT_TESTED | 尚无原始目标问题的自然回答复测 |
 
-口径映射：旧 L2 精确关键词与旧 L3 关键词加主题发现合并到当前 L2；旧 L4 目标平台检索在当前口径下区分为 L3 精确实体检索与 L4 主题关联。Query A/B/C 不计入 L5 自然提及。CONTENT SEMANTICS=PASS（用户认可已审核内容，不等于豆包已理解）；当前工作诊断的主要瓶颈是 Discovery / Retrieval，具体原因未确定。NEXT ACTION：READY_FOR_DISCOVERY_TEST。
+口径映射：旧 L2 精确关键词与旧 L3 关键词加主题发现合并到当前 L2；旧 L4 目标平台检索在当前口径下区分为 L3 精确实体检索与 L4 主题关联。Query A/B/C 不计入 L5 自然提及。CONTENT SEMANTICS=PASS（用户认可已审核内容，不等于豆包已理解）；当前工作诊断的主要瓶颈是 Discovery / Retrieval，具体原因未确定。Test #2 结果分类已收齐；当前行动转入下方 Phase 7 配置诊断。
+
+## Phase 6 / Discovery Test #2：Doubao Retrieval Test #2
+
+- 建立时间：2026-09-17 16:32:32 +08:00（准备时间，非测试时间）；关联操作 OP-026。
+- 执行方式：用户人工测试；助手本轮未执行任何豆包查询或公开搜索。
+- 本轮仅复测 A/B/C；不将 Discovery Test #1 的通用搜索结果与豆包检索结果混为一类。A/B/C 均已收到用户结果报告；未提供的执行条件与来源证据继续保留未知。
+
+### 人工执行协议
+
+1. 每条 Query 分别建立一个全新会话，只发送下表中的原文；不能在同一会话连续询问 A/B/C，也不通过“重新生成”代替新会话。
+2. 不向豆包提供标识含义、公开 URL、文章内容、参考答案、上一轮回答或本记录表；不追加纠正或提示。以下 Expected 仅用于记录者评估，不属于 Prompt。
+3. 记录各次实际联网设置及界面检索迹象、可见 Query Rewrite 和来源列表。未显示写“未显示”，不能从 Query B 的“搜索一下”或模型自述反推搜索工具已执行。
+4. 保存完整回答、实际测试时间与时区、新会话情况、模式/版本（界面可见时）、登录及记忆/个性化条件；无法确认的项目写未知。新会话不自动证明账户级记忆已隔离，若有明显上下文污染须单列说明。
+5. 重试或意外污染的尝试单独保留，不覆盖或只挑选正确回答；尚未提供的字段不能补造。
+
+| 测试 ID | 维度 | 唯一发送的 Query |
+|---|---|---|
+| DBR2-A | Exact Entity Retrieval | `XHZGEO916是什么？` |
+| DBR2-B | Explicit Search Retrieval | `搜索一下XHZGEO916` |
+| DBR2-C | Entity-Topic Association | `XHZGEO916和Shopify有什么关系？` |
+
+### 结果分类与证据规则
+
+Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。成功必须理解 Shopify、中小卖家、替代方案调研与唯一标识之间的关系；字符串复述、字符拆解或仅重复 Prompt 中的 Shopify 均不算成功。
+
+| Result（仅允许以下五类） | 判定口径 |
+|---|---|
+| FOUND_CORRECTLY | 清楚建立完整正确关系，未把标识当作产品、公司、品牌、SaaS 或建站平台；保留回答和支持判断的证据 |
+| FOUND_PARTIALLY | 识别了该公开调研及其 Shopify 替代方案主题等实质关系，但中小卖家、年份或唯一实验标识等信息不完整，且没有相矛盾的错误身份断言 |
+| FOUND_INCORRECTLY | 错误关联为 ERP 编号、私有 App ID、GEO 地区功能编号、脚本/Pixel 标记或虚假产品等，未形成正确关系；记录具体错误，不当作检索命中 |
+| NOT_FOUND | 回答未找到目标调研或相关匹配；若同时给出无依据的备选猜测，单列 Observed，不将猜测算作 Retrieval |
+| UNCERTAIN | 已有回答但证据不足、表述混杂或污染使判定无法可靠完成；明确不确定原因。尚未测试或尚未交回结果时不预填此分类 |
+
+回答语义分类与来源检索证据分别记录：语义正确但未显示搜索或来源时，不声称已验证公开网页 Retrieval；来源命中必须有对应真实 URL。候选资料出现与最终引用分开标注。GitHub Found 指 github.com 仓库节点，GitHub Pages Found 指 github.io 页面，分别记录；其他 GitHub、知乎或 CSDN 内容不算本实验节点命中。
+
+### A/B/C 记录（均已收到用户报告）
+
+下表“—”表示等待人工提供，不是 Result 分类。正确回答必须补齐搜索与来源字段；实际无法观察的值如实记录，不强行填 YES/NO。
+
+| 字段 | DBR2-A | DBR2-B | DBR2-C |
+|---|---|---|---|
+| Result | NOT_FOUND | NOT_FOUND | FOUND_INCORRECTLY |
+| Search Enabled（设置及实际检索迹象） | UNKNOWN；仅有模型公开检索自述 | UNKNOWN；未提供 | UNKNOWN；未提供 |
+| Search Queries（界面实际显示） | 未提供 | 未提供 | 未提供 |
+| Sources（URL、标题、候选/最终引用） | 未提供 | 未提供 | 未提供 |
+| GitHub Found（YES/NO/UNKNOWN＋证据） | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 |
+| GitHub Pages Found（YES/NO/UNKNOWN＋证据） | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 |
+| Zhihu Found（YES/NO/UNKNOWN＋证据） | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 |
+| CSDN Found（YES/NO/UNKNOWN＋证据） | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 | UNKNOWN；无来源列表 |
+| Answer（完整原文或证据文件位置） | 完整原文未提供；用户观察摘要见下节 | 完整原文未提供；仅有结果分类 | 完整原文未提供；观察摘要见下节 |
+| Test Time（实际时间及时区） | 未提供，不以登记时间替代 | 未提供 | 未提供 |
+| New Session / Context Clean（新会话及污染检查） | 协议要求全新会话；本次执行细节未提供 | 未提供 | 未提供 |
+| Environment（模式、登录、记忆条件） | 未提供 | 未提供 | 未提供 |
+| Observed / Diagnosis（理由及限制） | 模型称无匹配后猜测编号身份；不属于正确 Retrieval | 用户报告未找到 | 错误猜测 ERP/App/GEO 工具任务/关联业务编号 |
+
+### Query A / DBR2-A 观察记录
+
+- Query：`XHZGEO916是什么？`；Result：NOT_FOUND。
+- Recorded At：2026-09-17 16:34:54 +08:00；关联 OP-027。实际测试时间未知。
+- Observed（用户转述）：豆包表示全网公开检索没有匹配到该编号，随后推测为内部自定义编号，项目/工单/资产/数据库 ID，输入错误，私有系统密钥/任务 Token，或 GEO 地理相关编号。
+- 上述内容全部作为模型推测记录，不属于正确 Retrieval，不是真实实体属性；尤其“密钥/Token”不是对该标识具有凭证用途的认定。本轮没有提供或保存任何真实密钥。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。
+- Comparison：Test #1 A=NOT_FOUND → Test #2 A=NOT_FOUND；Change：NO_IMPROVEMENT_DETECTED。结论仅限 A 的两次用户观测，不等于证明新页面无效、所有搜索均未收录或整体实验失败。
+- 证据边界：助手未执行查询，完整回答、搜索设置、Rewrite、来源与环境字段未提供。模型“全网无匹配”的自述不证明检索范围，亦不据此把各渠道 Found 填为 NO。
+
+### Query B/C 补录与 External Search（Phase 7 用户报告）
+
+- Recorded At：2026-09-17 16:36:45 +08:00（本轮登记开始时间，非测试时间）。
+- DBR2-B：`搜索一下XHZGEO916`；Result=NOT_FOUND。用户未提供完整回答或更详细观察，不套用 Test #1 B 的具体猜测。
+- DBR2-C：`XHZGEO916和Shopify有什么关系？`；Result=FOUND_INCORRECTLY。用户观察到第三方 ERP 编号、第三方 App 内部 ID、GEO 工具任务号、Shopify 关联业务编号等错误推测，均不是正确 Retrieval。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。模型的业务编号猜测不纳入真实实体资料。
+- External Search：`"XHZGEO916"` → NO RESULTS DETECTED；`"XHZGEO916" Shopify` → NO RESULTS DETECTED。搜索引擎、实际时间、地区、结果页及截图未提供；助手未独立进行这些搜索，不断言所有引擎都未收录。
+- Test #2 已收到全部分类，来源列表、真实搜索开关、Rewrite、完整回答与新会话执行证据仍有缺项。比较仅为用户观测的描述，不证明因果或平台偏好。
+
+### Test #1 → Test #2
+
+| 维度 | Query | Test #1 | Test #2 | 变化与证据 |
+|---|---|---|---|---|
+| Exact Entity Retrieval | A | NOT_FOUND | NOT_FOUND | NO_IMPROVEMENT_DETECTED；用户观测，完整环境证据待补 |
+| Explicit Search Retrieval | B | NOT_FOUND | NOT_FOUND | NO_IMPROVEMENT_DETECTED；用户报告，条件未知 |
+| Entity-Topic Association | C | FOUND_INCORRECTLY | FOUND_INCORRECTLY | NO_IMPROVEMENT_DETECTED；同类错误，猜测细节不同 |
+
+取得本轮证据后按维度比较，重点观察 NOT_FOUND → FOUND_PARTIALLY → FOUND_CORRECTLY，也保留不变或变差的结果。这个箭头是关注方向，不是预设必经阶段；Test #1 的真实错误分类不改写成 NOT_FOUND。Test #1 的实际时间及部分环境字段未知，若不能确认条件一致，比较仅作描述，不宣称因果或归功于某个发布节点。
+
+### Natural Answer Mention 暂缓
+
+当前禁止测试原始目标问题“Shopify有哪些适合中小卖家的替代品？”。只有 A/B/C 出现经证据支持的正确 Retrieval 信号后，才具备进入 Natural Answer Mention Test 的前提；本轮仍停止等待，不自动跨阶段。仅标识字面出现、错误关联或无来源的正确猜测不足以确认检索成功。
+
+本轮 A/B/C 都含实验标识，不能计入自然提及出现率。当前自然回答 N=0，出现率 N/A。Phase 6 仅本地记录；Phase 7 另有用户授权的必要配置/导航修复，不修改研究结论。
+
+Test #2 结果分类已收齐；当前行动转入下方 Phase 7 配置诊断。
 
 ### 历史漏斗快照（Query A 登记后，旧口径）
 

@@ -358,6 +358,54 @@ Sensitive Data Check：PASS（文件清单与提交内容检查）；日志不�
 - 日志操作：同步 results.md 为 Pages PUBLISHED，保留所有此前计划变化及 Query A/B/C 结果。本次仅继续提交并推送两份实验记录；distribution/ 不纳入发布提交，实际记录提交号由 Git 历史保存。
 - NEXT ACTION：READY_FOR_DISCOVERY_TEST。未执行搜索发现、豆包测试、新增分发渠道或自动监控，到此停止。
 
+### OP-026：Phase 6 / Discovery Test #2 人工测试准备
+
+- Recorded At：2026-09-17 16:32:32 +08:00；仅为模板建立时间，不是测试执行时间。
+- 目的：建立 Doubao Retrieval Test #2 的 A/B/C 人工记录模板与 Test #1 → Test #2 对比，等待用户提供结果。
+- 输入协议：A=`XHZGEO916是什么？`；B=`搜索一下XHZGEO916`；C=`XHZGEO916和Shopify有什么关系？`。每条分别使用全新会话，不提供含义、公开 URL、文章或参考答案，不追加纠正提示。
+- 记录字段：Result、Search Enabled、Search Queries、Sources、GitHub Found、GitHub Pages Found、Zhihu Found、CSDN Found、Answer、Test Time，并补充新会话/污染检查、环境与诊断依据。未收到的结果留空，非预填 UNCERTAIN。
+- Result 分类仅使用 FOUND_CORRECTLY、FOUND_PARTIALLY、FOUND_INCORRECTLY、NOT_FOUND、UNCERTAIN；区分回答语义与已验证的来源检索，不因字符串出现或模型猜测认定成功。
+- 对比起点：Test #1 A/B=NOT_FOUND，C=FOUND_INCORRECTLY，保持原始结果。本轮结果未提供，不判断改善或推断因果。P1 自然回答 N=0、出现率 N/A 保持不变。
+- 当前节点：GitHub、Zhihu、CSDN、GitHub Pages=PUBLISHED；Juejin、Douyin=SKIPPED。保留既有公开访问证据边界，没有重新检索或访问渠道。
+- 禁止提前验收：原始目标问题自然回答测试暂缓，只有 A/B/C 出现经证据支持的正确 Retrieval 信号后才可进入；本轮不自动执行下一阶段。
+- 文件范围：只更新 experiment/results.md 与本日志；未开发、未修改文章或页面、未增加渠道、未执行查询、未提交或推送。
+- NEXT ACTION：WAITING_FOR_DOUBAO_TEST_2_RESULTS。
+
+### OP-027：Doubao Retrieval Test #2 / Query A 登记
+
+- Recorded At：2026-09-17 16:34:54 +08:00（登记时间，非实际测试时间）。
+- 测试 ID：DBR2-A；Query：`XHZGEO916是什么？`；Result：NOT_FOUND。
+- Observed（用户提供）：豆包表示全网公开检索无匹配，随后猜测内部自定义编号、项目/工单/资产/数据库 ID、输入错误、私有系统密钥/任务 Token、GEO 地理相关编号。以上全部为模型推测，不是正确 Retrieval，也不是对实验标识具有凭证或地理用途的确认。
+- Expected：XHZGEO916 是“2026中小卖家Shopify替代方案公开调研”的唯一实验标识。
+- Comparison：Test #1 A=NOT_FOUND；Test #2 A=NOT_FOUND；Change=NO_IMPROVEMENT_DETECTED。仅限该维度用户观测，不推断整体失败或某发布渠道无效。
+- 证据边界：完整回答、实际测试时间、联网设置、Search Queries、Sources、新会话执行细节和环境未提供；保留未知，四个渠道 Found 均为 UNKNOWN，不用模型自述推断来源列表为空。助手未执行搜索。
+- 文件操作：更新 results.md 的 DBR2-A、两轮对比及当前状态，本日志追加；Test #1 结果保留，本轮 B/C 不代填。
+- 执行边界：仅本地记录，未修改 Mother Content 或网页，未增加渠道、未提交或推送，未测试原始目标问题；自然回答 N=0、出现率 N/A 不变。
+- NEXT ACTION：WAITING_FOR_DOUBAO_TEST_2_RESULTS（等待 Query B 和 Query C）。
+
+### OP-028：Phase 7 / Indexability Diagnosis 与必要修复
+
+- 开始：2026-09-17 16:36:45 +08:00；2026-09-18 09:42:55 +08:00 按用户“继续执行”恢复；线上最终验证：2026-09-18 09:47:19 +08:00。
+- 目的及授权：停止内容扩张，检查真实 Public URL、HTML/响应头、canonical、robots、sitemap、双向导航；用户允许仅修复必要配置与链接，并提交普通推送。不测试豆包、不改 Mother Content、不增加分发渠道。
+- 补录用户结果：Test #2 B=`搜索一下XHZGEO916`，NOT_FOUND；C=`XHZGEO916和Shopify有什么关系？`，FOUND_INCORRECTLY。C 错误猜测为第三方 ERP 编号、第三方 App 内部 ID、GEO 工具任务号、Shopify 关联业务编号，均不属于正确 Retrieval。A/B/C 相比 Test #1 未观察到分类改善；实际时间、完整回答、来源与会话条件仍未提供。
+- External Search 用户观测：`"XHZGEO916"` 和 `"XHZGEO916" Shopify` 均为 NO RESULTS DETECTED；没有引擎、实际时间或结果页证据，助手未独立查询，不写作全网未收录。
+- Public URL / Final URL：https://xuehezhou.github.io/XHZGEO916-shopify-alternatives-research/ 。GitHub API 确认 source=main /docs；匿名 GET 和 curl 均返回首页正文，无登录跳转。
+- 修改前：HTTP 200；正确 title/description/canonical、主要正文与七个平台已在 HTML；无 noindex/nofollow/X-Robots-Tag 或隐藏文字。域名根及项目路径 robots.txt 均 404，根及项目路径 sitemap.xml 均 404。README 缺少 Pages 链接，Pages 已有仓库链接。
+- 最小修复：README.md 新增一条公开网页链接；docs/index.html 把仓库链接标签改为“完整研究仓库”，页脚加入 sitemap 链接；docs/sitemap.xml 只列真实首页，无 lastmod。canonical 正确所以保持不变；未更改文章事实、结论或重复添加关键词段落。
+- robots 决策：域名根 /robots.txt 缺失记 NOT_PRESENT，而非 FAIL。项目仓库中的 docs/robots.txt 只会部署到子路径，不能作为主机根抓取规则，故不创建无效控制文件，不另建仓库或购买域名。依据：[Google robots.txt 位置及 404 处理说明](https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec)。
+- 本地验证：sitemap XML 命名空间和唯一 loc 正确，无 lastmod；HTML 与原提交相比仅两处导航变化，canonical 未改，Mother Content SHA-256 与此前一致；提交清单和常见凭证模式检查通过。
+- Fix Commit：2b94071504ecabd032ea441fe8e6cbeca17f6c99；消息 `fix: improve public page discoverability`；仅包含 README.md、docs/index.html、docs/sitemap.xml。
+- 推送中断：2026-09-17 两次普通 push 因 github.com:443 连接超时失败，进一步重试被自动审批拒绝，理由为额度限制。未绕过当时拒绝。2026-09-18 用户恢复任务后，新审批下普通 push 实际执行但仍遇网络超时；官方 api.github.com 的只读请求正常。
+- 传输恢复：重新获批使用官方 GitHub Git 数据接口上传三个既有 blob 和同一 tree/commit，逐项核对 SHA 与本地一致，二次检查远程仍为父提交 1f6df8052e242a1dea4ff306195c0d5b8e5d88ae 后，以 force=false 更新 main。提交 SHA 完全一致，未 force push、未创建不同历史；不把此传输方式写成原生 git push 成功。
+- 相关接口依据：[GitHub Git commits](https://docs.github.com/en/rest/git/commits#create-a-commit)、[GitHub Git references](https://docs.github.com/en/rest/git/refs#update-a-reference)。
+- 部署验证：Pages builds/latest 返回 status=built、error.message=null、commit=2b94071504ecabd032ea441fe8e6cbeca17f6c99、updated_at=2026-09-18T01:45:56Z。实际首页与项目 sitemap 均 HTTP 200，规范化换行后首页与本地完全一致。
+- 最终 curl 检查：title、description、H1、唯一 canonical、完整正文标识/主题/七个平台、非产品定义均通过；robots meta 和 X-Robots-Tag 均无禁止规则，正文无需执行 JavaScript，唯一 script 为不执行的 Article JSON-LD。没有 noindex、nofollow、隐藏词或登录要求。
+- 双向导航：匿名 GitHub README API 返回 200，解码后确认 README → Pages 正常 Markdown 链接；线上 Pages → Repository 的“完整研究仓库”链接及 sitemap 链接均存在。
+- robots/sitemap 实测：根 https://xuehezhou.github.io/robots.txt 和项目 robots.txt 均 HTTP 404，记 NOT_PRESENT；项目 sitemap.xml 为 HTTP 200，只有真实首页且无 lastmod。
+- 结论：PUBLICLY_ACCESSIBLE、CRAWL_ALLOWED、INDEXABLE_BY_CONFIGURATION；INDEXING_NOT_CONFIRMED、SEARCH_DISCOVERY_NOT_DETECTED。未发现配置阻断不等于已收录，也不能证明延迟原因；豆包仍沿用 NOT_FOUND / INCORRECT 的用户观测。
+- 记录同步：更新 experiment/results.md 与本日志；本地 distribution/ 不纳入此次提交。后续记录提交及远程同步由 Git 历史记录，传输若仍受限使用相同对象的非强制快进方法，不改变发布内容。
+- NEXT ACTION：A. WAIT_FOR_INDEXING。停止；未创建新文章、账号、渠道或自动监控，未测试豆包最终问题。
+
 ## 后续操作模板
 
 每次操作追加唯一 ID，并记录：
